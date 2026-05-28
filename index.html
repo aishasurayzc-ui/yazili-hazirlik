@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11. Sınıf Yazılı Hazırlık — Ayşe Yazıcı</title>
+<style>
+:root{--b:#6B0F1A;--bl:#8B1A26;--bg:#f9f0f1;--pale:#f2dde0;--g:#155724;--gbg:#d4edda;--r:#721c24;--rbg:#f8d7da;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f8;color:#222;font-size:13px;min-height:100vh;}
+.page{max-width:940px;margin:0 auto;padding:22px 24px 40px;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#6B0F1A 0%,#9B1F2E 100%);color:#fff;border-radius:14px;padding:20px 28px 16px;margin-bottom:20px;text-align:center;box-shadow:0 4px 18px rgba(107,15,26,.3);}
+.header .ust{font-size:11px;letter-spacing:3px;opacity:.75;text-transform:uppercase;margin-bottom:4px;}
+.header h1{font-size:26px;font-weight:900;letter-spacing:1.5px;margin-bottom:4px;}
+.header .alt{font-size:12.5px;opacity:.82;margin-bottom:2px;}
+.header .hz{margin-top:9px;font-size:15px;font-weight:800;border-top:1px solid rgba(255,255,255,.25);padding-top:8px;}
+
+/* SEKME NAV */
+.tab-nav{display:flex;gap:0;background:#fff;border-radius:12px 12px 0 0;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden;margin-bottom:0;}
+.tab-btn{flex:1;padding:13px 10px;font-size:13px;font-weight:700;color:#777;background:#fff;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.tab-btn:hover{background:var(--bg);color:var(--b);}
+.tab-btn.aktif{color:var(--b);border-bottom-color:var(--b);background:#fff8f9;}
+.tab-icerik{background:#fff;border-radius:0 0 12px 12px;box-shadow:0 2px 8px rgba(0,0,0,.08);min-height:400px;}
+.panel{display:none;padding:22px 24px;}
+.panel.aktif{display:block;}
+
+/* OZET PANEL */
+.kolon-baslik{color:var(--b);font-size:13.5px;font-weight:900;margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid var(--pale);border-left:4px solid var(--b);padding-left:10px;}
+.alt-baslik{color:var(--bl);font-weight:700;font-size:12.5px;margin:12px 0 5px;background:var(--bg);padding:4px 8px;border-radius:4px;}
+.ozet-p{font-size:12px;color:#333;line-height:1.75;margin-bottom:6px;}
+.kavram{display:inline-block;background:var(--pale);color:var(--b);border-radius:3px;padding:1px 6px;font-weight:700;font-size:11px;margin:1px 2px;}
+ul.liste{padding-left:15px;margin:4px 0 8px;}
+ul.liste li{font-size:12px;color:#333;line-height:1.7;margin-bottom:3px;}
+ul.liste li strong{color:var(--b);}
+ul.ic{padding-left:12px;margin-top:3px;}
+ul.ic li{font-size:11.5px;color:#444;line-height:1.6;margin-bottom:1px;}
+
+/* TEST PANEL */
+.progress-bar-wrap{background:#eee;border-radius:20px;height:8px;margin-bottom:14px;overflow:hidden;}
+.progress-bar{height:8px;background:linear-gradient(90deg,var(--b),#c0392b);border-radius:20px;transition:width .4s ease;}
+.progress-text{text-align:center;font-size:12px;color:#888;margin-bottom:16px;}
+.soru-kart{background:#fff;border:1.5px solid var(--pale);border-radius:10px;padding:20px 22px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.soru-kart .soru-no-badge{display:inline-block;background:var(--b);color:#fff;border-radius:20px;padding:3px 14px;font-size:11.5px;font-weight:700;margin-bottom:12px;}
+.soru-kart .soru-metin{font-size:13.5px;font-weight:700;color:#111;line-height:1.65;margin-bottom:16px;}
+.secenekler-liste{display:flex;flex-direction:column;gap:8px;}
+.secenek{padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:12.5px;display:flex;align-items:flex-start;gap:10px;transition:all .18s;background:#fafafa;}
+.secenek:hover:not(.sec-dogru):not(.sec-yanlis){background:var(--bg);border-color:var(--bl);}
+.secenek-harf{font-weight:800;color:var(--b);min-width:20px;flex-shrink:0;font-size:13px;}
+.sec-dogru{background:var(--gbg)!important;border-color:var(--g)!important;color:var(--g)!important;}
+.sec-dogru .secenek-harf{color:var(--g)!important;}
+.sec-yanlis{background:var(--rbg)!important;border-color:var(--r)!important;color:var(--r)!important;text-decoration:line-through;}
+.sec-yanlis .secenek-harf{color:var(--r)!important;}
+.soru-kart.cevaplandi .secenek{cursor:default;pointer-events:none;}
+.feedback{margin-top:14px;padding:10px 14px;border-radius:8px;font-size:12.5px;font-weight:600;display:none;}
+.feedback.dogru-fb{background:var(--gbg);color:var(--g);display:block;}
+.feedback.yanlis-fb{background:var(--rbg);color:var(--r);display:block;}
+.btn-sonraki{margin-top:16px;display:none;width:100%;padding:12px;background:var(--b);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:background .2s;}
+.btn-sonraki:hover{background:var(--bl);}
+.btn-sonraki.goster{display:block;}
+
+/* SONUÇ EKRANI */
+.sonuc{text-align:center;padding:30px 20px;display:none;}
+.sonuc.goster{display:block;}
+.sonuc-puan{font-size:56px;font-weight:900;color:var(--b);}
+.sonuc-alt{font-size:16px;color:#555;margin-top:6px;}
+.sonuc-detay{margin-top:20px;display:flex;justify-content:center;gap:30px;font-size:13px;}
+.sonuc-detay .d{color:var(--g);font-weight:700;}
+.sonuc-detay .y{color:var(--r);font-weight:700;}
+.btn-tekrar{margin-top:24px;padding:12px 28px;background:var(--b);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;}
+.soru-kart-wrap{display:block;}
+.soru-kart-wrap.gizli{display:none;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- BAŞLIK -->
+<div class="header">
+  <div class="ust">11. Sınıf Din Kültürü ve Ahlak Bilgisi</div>
+  <h1>YAZILI HAZIRLIK</h1>
+  <div class="alt">Ünite 4: İnançla İlgili Meseleler &nbsp;|&nbsp; Ünite 5: Yahudilik ve Hristiyanlık</div>
+  <div class="hz">Ayşe Yazıcı</div>
+</div>
+
+<!-- SEKME NAV -->
+<div class="tab-nav">
+  <button class="tab-btn aktif" onclick="sekme(0)">&#128218; Ünite 4 — İnançla İlgili Meseleler</button>
+  <button class="tab-btn" onclick="sekme(1)">&#9878; Ünite 5 — Yahudilik ve Hristiyanlık</button>
+  <button class="tab-btn" onclick="sekme(2)">&#9999; Test — 50 Soru</button>
+</div>
+
+<div class="tab-icerik">
+
+<!-- PANEL 0: ÜNİTE 4 -->
+<div class="panel aktif" id="panel0">
+  <div class="kolon-baslik">ÜNİTE 4 — İNANÇLA İLGİLİ MESELELER</div>
+
+  <div class="alt-baslik">1. İnançla İlgili Felsefi Yaklaşımlar</div>
+  <ul class="liste">
+    <li><strong>Teizm:</strong> Allah'ın varlığını, birliğini, sıfatlarını, evrene müdahalesini, vahyi, mucizeyi ve ahireti kabul eder. Tanrı kişiseldir ve yarattıklarıyla ilişkisini sürdürür. İslam, Yahudilik ve Hristiyanlık teist dinlerdir.</li>
+    <li><strong>Deizm:</strong> Tanrı'nın varlığını kabul eder; fakat vahyi, mucizeyi, duayı ve dini emirleri reddeder. <em>"Saatçi Tanrı"</em> anlayışı: Tanrı evreni bir saat gibi kurdu, sonra kendi haline bıraktı. Aydınlanma döneminde yaygınlaştı. Voltaire ve Rousseau önemli temsilcileridir.</li>
+    <li><strong>Ateizm:</strong> Tanrı'nın varlığını kesinlikle ve tümüyle reddeder. Karl Marx: <em>"Din halkın afyonudur."</em> Ludwig Feuerbach: "Tanrı insanın kendi özelliklerini yansıttığı bir projeksiyon." Modern dönemde Richard Dawkins önemli temsilcidir.</li>
+    <li><strong>Agnostisizm:</strong> Tanrı'nın var olup olmadığının bilinemeyeceğini savunur. "Kanıtlanamaz, reddedilemez." Terimi 1869'da <strong>Thomas Huxley</strong> ortaya koymuştur.</li>
+    <li><strong>Panteizm:</strong> Tanrı ile evreni özdeşleştirir; "Her şey Tanrı'dır." Baruch Spinoza: <em>"Deus sive Natura"</em> (Tanrı ya da Doğa). Giordano Bruno da savunmuştur. İslam reddeder: Allah yaratıktan münezzehtir (tenzih).</li>
+    <li><strong>Politeizm:</strong> Birden fazla tanrıya inanç. Eski Yunan, Roma dinleri ve Hinduizm örnek gösterilebilir.</li>
+    <li><strong>Monoteizm:</strong> Tek Tanrı inancı. İslam'ın özüdür (tevhit). İslam en saf monoteizmi temsil eder.</li>
+    <li><strong>Nihilizm:</strong> Hiçbir değer, amaç veya anlamın gerçek olmadığını savunur. Friedrich Nietzsche: <em>"Tanrı öldü."</em> Ahlaki ve dini temelleri reddeder.</li>
+  </ul>
+  <div class="ozet-p">İslam'a göre akıl değerli ama sınırlıdır. Vahyin rehberliği olmadan insan mutlak hakikate ulaşamaz. İnancın temelinde <span class="kavram">fıtrat</span> (yaratılıştan gelen Allah'a yönelme eğilimi) önemli yer tutar. Hz. Peygamber: <em>"Her doğan fıtrat üzere doğar."</em> (Buhari)</div>
+
+  <div class="alt-baslik">2. Allah'ın Varlığına Akli Deliller</div>
+  <ul class="liste">
+    <li><strong>Hudus Delili:</strong> Evren sonradan var oldu (hadistir). Sonradan var olan her şeyin bir var ediciye ihtiyacı vardır. O var edici Allah'tır.</li>
+    <li><strong>İmkan Delili:</strong> Evrendeki her varlık var olabilir ya da olmayabilir (mümkün varlık). Bunları zorunlu olarak var eden <em>Vacibü'l-Vücud</em> (Zorunlu Varlık) Allah'tır.</li>
+    <li><strong>Nizam (Gaye-Düzen) Delili:</strong> Evrendeki kusursuz düzen ve amaçlılık tesadüfle açıklanamaz. Bu düzeni yaratan ve koruyan bir Yaratıcı olmalıdır.</li>
+    <li><strong>Fıtrat Delili:</strong> İnsan doğuştan Allah'a yönelme eğilimi taşır. Bu evrensel eğilim Allah'ın varlığının doğal kanıtıdır.</li>
+  </ul>
+
+  <div class="alt-baslik">3. Yeni Dinî Hareketler</div>
+  <ul class="liste">
+    <li><strong>New Age Hareketi:</strong> Özellikle 1960'larda Batı'da yaygınlaştı. Doğu mistisizmi (Budizm, Hinduizm), astroloji, ekoloji, meditasyon ve reenkarnasyon inançlarını bir araya getirir. Karma anlayışına dayanır. Kurumsal dinlere bağlı değildir; "kişisel din" anlayışına sahiptir.</li>
+    <li><strong>Siyentoloji:</strong> L. Ron Hubbard tarafından 1954'te kuruldu. "Dianetik" (1950) kitabına dayanır. <em>"Thetan"</em> adlı ölümsüz ruhun özgürleşmesini hedefler. "Auditing" seanslarıyla geçmiş travmalar temizlenir. Bilimsel dil kullanan dinî örgüt yapısı; birçok ülkede tartışmalıdır.</li>
+    <li><strong>Satanizm:</strong> Anton LaVey'in 1966'da San Francisco'da kurduğu <em>Şeytan Kilisesi</em> ile modern biçimini aldı. 1969'da "Şeytan İncili" yayımlandı. Şeytanı bireyselliğin ve özgürlüğün sembolü olarak kullanır. "İnsan kendi tanrısıdır" anlayışı hâkim. Haz, güç ve bireycilik ön plandadır.</li>
+  </ul>
+  <div class="ozet-p">Bu hareketler kurumsal dinlerin dışında konumlanır; bireyin iç dünyasını merkeze alır. İslam, vahye dayanan kesin bilgiyi bu tür spekülatif akımlara karşı temel ölçüt sunar.</div>
+
+  <div class="alt-baslik">4. Kur'an'dan Mesajlar: Bilgi ve İman</div>
+  <ul class="liste">
+    <li><strong>En'am Suresi 59. Ayet:</strong> <em>"Gaybın anahtarları yalnızca O'nun katındadır. Onları O'ndan başkası bilemez. O, karada ve denizde olanı bilir; O'nun bilgisi dışında bir yaprak bile düşmez."</em><br>→ Mutlak bilgi yalnızca Allah'a aittir. Gayb bilgisi hiçbir varlığa verilmemiştir.</li>
+    <li><strong>Gaybın Beş Anahtarı (Lokman 34):</strong>
+      <ul class="ic">
+        <li>Kıyametin ne zaman kopacağı</li>
+        <li>Yağmurun ne zaman yağacağı</li>
+        <li>Ana rahmindekinin durumu</li>
+        <li>Kişinin yarın ne kazanacağı</li>
+        <li>Kişinin nerede öleceği</li>
+      </ul>
+    </li>
+    <li><strong>Lokman Suresi 27. Ayet:</strong> <em>"Yeryüzündeki bütün ağaçlar kalem olsa, deniz de mürekkep olsa Allah'ın sözleri yine de tükenmezdi."</em><br>→ Allah'ın ilmi ve kelamı sonsuzdur. İnsan aklı ne kadar gelişse de ilahi ilmin yanında sınırlı kalır.</li>
+  </ul>
+  <div class="ozet-p"><strong>Sonuç:</strong> İnsan aklı tek başına her şeyi kavrayamaz. Vahiy, aklın göremediği alanlara ışık tutar. İslam'da akıl ve vahiy birbirini destekler.</div>
+</div>
+
+<!-- PANEL 1: ÜNİTE 5 -->
+<div class="panel" id="panel1">
+  <div class="kolon-baslik">ÜNİTE 5 — YAHUDİLİK VE HRİSTİYANLIK</div>
+
+  <div class="alt-baslik">A) YAHUDİLİK</div>
+  <ul class="liste">
+    <li><strong>Temeli:</strong> Hz. İbrahim ve Hz. Musa'ya dayandırılır. Dünyanın en eski monoteist dinlerinden biri.</li>
+    <li><strong>Kutsal Kitap — Tanah:</strong>
+      <ul class="ic">
+        <li>Tora/Tevrat (5 kitap — Hz. Musa'ya vahiy)</li>
+        <li>Neviim (Peygamberler bölümü)</li>
+        <li>Ketuvim (Yazılar / Kutsal Metinler)</li>
+      </ul>
+    </li>
+    <li><strong>Talmud:</strong> Mişna + Gemara — yazılı Tevrat'ın sözlü yorumu.</li>
+    <li><strong>Tanrı adları:</strong> YHWH/Yehova — telaffuz edilmez; yerine <em>Adonai</em> kullanılır. Elohim de Tanrı adıdır.</li>
+    <li><strong>İnanç esasları:</strong> Tek Tanrı, seçilmiş halk (İsrailoğulları), Mesih beklentisi (Mashiach), ahiret, 613 emir (mitzvot: 248 olumlu + 365 olumsuz).</li>
+    <li><strong>İbadet:</strong> Sinagog (ibadet yeri) | Haham/Rabbi (din adamı).</li>
+    <li><strong>Bayramlar:</strong>
+      <ul class="ic">
+        <li>Şabat — Cuma akşamı–Cumartesi, kutsal dinlenme günü</li>
+        <li>Yom Kippur — Kefaret Günü, yıllık oruç</li>
+        <li>Pesah (Hamursuz) — İsrailoğulları'nın Mısır'dan kurtuluşu</li>
+        <li>Roş Aşana — Yahudi yeni yılı</li>
+        <li>Hanuka — Işıklar Bayramı</li>
+      </ul>
+    </li>
+    <li><strong>Not:</strong> Yahudilikte din ve etnisite iç içedir; anadan Yahudi doğulur.</li>
+  </ul>
+
+  <div class="alt-baslik">B) HRİSTİYANLIK</div>
+  <ul class="liste">
+    <li><strong>Temeli:</strong> Hz. İsa'nın (M.Ö. 4 – M.S. 30 civarı) öğretileri. Hz. İsa Tanrı'nın Oğlu kabul edilir.</li>
+    <li><strong>Kutsal Kitap:</strong> Eski Ahit + Yeni Ahit. Yeni Ahit'te 4 İncil: Matta, Markos, Luka (sinoptik) ve Yuhanna.</li>
+    <li><strong>Teslis:</strong> Baba (Tanrı) + Oğul (Hz. İsa) + Kutsal Ruh → üç şahsiyet, tek Tanrı.</li>
+    <li><strong>Kurtuluş teolojisi:</strong> Hz. İsa insanlığın günahlarına kefaret için çarmıha gerildi; 3. günde dirildi (Paskalya).</li>
+    <li><strong>Mezhepleri:</strong>
+      <ul class="ic">
+        <li><strong>Katolik:</strong> Papa, Roma/Vatikan merkezi, 7 sakrament</li>
+        <li><strong>Ortodoks:</strong> Ekümenik Patrik, Konstantinopolis (İstanbul/Fener)</li>
+        <li><strong>Protestanlık:</strong> Martin Luther (1517 Reformu), Sola Scriptura</li>
+      </ul>
+    </li>
+    <li><strong>Sakramentler:</strong> Vaftiz, Efkaristiya/Komünyon, Günah çıkarma, Konfirmasyon, Evlilik, Ruhban, Hasta yağı.</li>
+    <li><strong>İbadet:</strong> Kilise | Papaz/Rahip (Katolik), Pastor (Protestan).</li>
+    <li><strong>Önemli günler:</strong> Noel (25 Aralık, doğum), Paskalya (diriliş), Epifani (6 Ocak).</li>
+  </ul>
+
+  <div class="alt-baslik">C) KARŞILAŞTIRMA</div>
+  <ul class="liste">
+    <li><strong>Ortak:</strong> Eski Ahit'i kutsal sayarlar; Hz. İbrahim ortak ata; tek Tanrı inancı vardır.</li>
+    <li><strong>Fark:</strong> Yahudiler Hz. İsa'yı Mesih kabul etmez. Teslis inancı yalnızca Hristiyanlık'ta yer alır.</li>
+  </ul>
+</div>
+
+<!-- PANEL 2: TEST -->
+<div class="panel" id="panel2">
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progBar" style="width:0%"></div></div>
+  <div class="progress-text" id="progText">Başlamak için aşağıdaki soruyu cevaplayın</div>
+
+  <!-- Soru kartı -->
+  <div class="soru-kart-wrap" id="soruWrap">
+    <div class="soru-kart" id="soruKart">
+      <div class="soru-no-badge" id="soruNoBadge">Soru 1 / 50</div>
+      <div class="soru-metin" id="soruMetin"></div>
+      <div class="secenekler-liste" id="seceneklerListe"></div>
+      <div class="feedback" id="feedbackDiv"></div>
+      <button class="btn-sonraki" id="btnSonraki" onclick="sonrakiSoru()">Sonraki Soru ›</button>
+    </div>
+  </div>
+
+  <!-- Sonuç ekranı -->
+  <div class="sonuc" id="sonucDiv">
+    <div class="sonuc-puan" id="sonucPuan"></div>
+    <div class="sonuc-alt">50 sorudan elde ettiğin puan</div>
+    <div class="sonuc-detay">
+      <div>Doğru: <span class="d" id="sonucD"></span></div>
+      <div>Yanlış: <span class="y" id="sonucY"></span></div>
+    </div>
+    <button class="btn-tekrar" onclick="tekrar()">Testi Tekrarla</button>
+  </div>
+</div>
+
+</div><!-- /tab-icerik -->
+</div><!-- /page -->
+
+<script>
+// --- SEKME ---
+function sekme(n){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('aktif',i===n));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('aktif',i===n));
+  if(n===2 && soruIdx===0) renderSoru();
+}
+
+// --- TEST VERİSİ ---
+const SORULAR=[
+  {s:"Allah'ın varlığını, birliğini, evrene müdahalesini, vahyi ve mucizeyi kabul eden inanç tutumuna ne denir?",s:["Deizm","Ateizm","Teizm","Agnostisizm","Nihilizm"],c:2},
+  {s:"Tanrı'nın varlığını kabul eden, ancak vahyi ve mucizeyi reddederek dini aklın ürünü sayan felsefi tutum hangisidir?",o:["Teizm","Panteizm","Deizm","Nihilizm","Monoteizm"],c:2},
+  {s:"Tanrı'nın var olup olmadığının bilinemeyeceğini savunan felsefi tutum hangisidir?",o:["Ateizm","Agnostisizm","Deizm","Politeizm","Monoteizm"],c:1},
+  {s:"Tanrı ile evreni özdeşleştiren, \"Her şey Tanrı'dır\" diyen anlayış hangisidir?",o:["Monoteizm","Teizm","Panteizm","Deizm","Nihilizm"],c:2},
+  {s:"İslam'a göre insanın doğuştan taşıdığı, onu Allah'a yönelten eğilime ne ad verilir?",o:["Taklit","Fıtrat","Heva","İçtihat","Vicdan"],c:1},
+  {s:"Aşağıdakilerden hangisi ateizmin temel özelliğidir?",o:["Allah'ın varlığı kesinlikle kabul edilir","Allah'ın varlığı bilinemez","Allah'ın varlığı kesinlikle reddedilir","Allah ile evren özdeştir","Birden fazla tanrıya inanılır"],c:2},
+  {s:"Birden fazla tanrıya inanılan sistem için kullanılan kavram hangisidir?",o:["Monoteizm","Deizm","Politeizm","Agnostisizm","Teizm"],c:2},
+  {s:"İslam'a göre inançta vahyin rehberliği zorunludur; çünkü:",o:["Akıl tamamen yetersizdir","İnsan aklının sınırlı olduğu kabul edilir","Deist görüş doğrudur","Vahiy aklı tamamen iptal eder","Fıtrat inanmayı engeller"],c:1},
+  {s:"New Age hareketi hakkında aşağıdakilerden hangisi doğrudur?",o:["Yalnızca İslam'ı esas alır","Kurumsal dinlere sıkı biçimde bağlıdır","Doğu mistisizmi, astroloji gibi unsurları sentezler","Yalnızca Hristiyanlık içi bir reform hareketidir","Yalnızca Budizm'e dayanır"],c:2},
+  {s:"Siyentoloji'nin kurucusu kimdir?",o:["Charles Darwin","L. Ron Hubbard","Sigmund Freud","Karl Marx","Friedrich Nietzsche"],c:1},
+  {s:"\"Gaybın anahtarları yalnızca O'nun katındadır; onları O'ndan başkası bilemez.\" ayeti hangi surede yer almaktadır?",o:["Lokman Suresi","Bakara Suresi","En'am Suresi","Yasin Suresi","İhlas Suresi"],c:2},
+  {s:"En'am Suresi 59. ayetin temel mesajı aşağıdakilerden hangisidir?",o:["İnsan her şeyi bilebilir","Mutlak bilgi Allah'a aittir; gayb yalnızca O'nun katındadır","Bilim dini açıklar","Melekler her şeyi bilir","İnsan aklı sınırsız kapasitededir"],c:1},
+  {s:"\"Yeryüzündeki ağaçlar kalem, denizler mürekkep olsa Allah'ın kelimeleri tükenmez.\" ayeti hangi surede geçmektedir?",o:["En'am Suresi","Lokman Suresi","İhlas Suresi","Fatiha Suresi","Nisa Suresi"],c:1},
+  {s:"Lokman Suresi 27. ayet neyi vurgular?",o:["İnsan bilgisinin mükemmelliğini","Allah'ın ilminin sonsuzluğunu ve insan aklının sınırlılığını","Denizlerin kutsallığını","Ağaçların önemini","Kur'an'ın insanlar tarafından yazıldığını"],c:1},
+  {s:"Yeni dinî hareketlerin genel özelliği aşağıdakilerden hangisidir?",o:["Kurumsal geleneksel dinlere sıkıca bağlıdırlar","Bireyin iç dünyasını merkeze alır ve kurumsal dinlerin dışında konumlanır","Yalnızca İslam'a karşıdırlar","Devlet tarafından kurulan yapılardır","Yalnızca bilimsel temelli akımlardır"],c:1},
+  {s:"Yahudiliğin kutsal kitabına verilen genel ad nedir?",o:["İncil","Talmud","Tanah","Zebur","Kuran"],c:2},
+  {s:"Hz. Musa'ya vahyedilen ve Tanah'ın temel bölümünü oluşturan kutsal kitap hangisidir?",o:["İncil","Tevrat (Tora)","Talmud","Mişna","Zebur"],c:1},
+  {s:"Yahudilikte sözlü yorum geleneğini yazıya geçiren ve Mişna ile Gemara'dan oluşan eser hangisidir?",o:["Tanah","Tora","Talmud","Neviim","Ketuvim"],c:2},
+  {s:"Yahudilikte ibadet yeri ve din adamı çifti hangisidir?",o:["Kilise – Papaz","Sinagog – Rabbi","Cami – İmam","Tapınak – Şaman","Kilise – Pastor"],c:1},
+  {s:"Yahudilikte beklenen kurtarıcı figürün adı nedir?",o:["Mesih (Mashiach)","Musa","İlyas","Davud","Yusuf"],c:0},
+  {s:"Yahudilikte Tanrı'nın kutsal dört harfli adı (YHWH) telaffuz edilmek yerine hangi kelimeyle okunur?",o:["Elohim","Adonai","Yehova","Şema","Tora"],c:1},
+  {s:"Yahudilikte Cuma akşamından Cumartesi akşamına kadar tutulan kutsal dinlenme gününe ne denir?",o:["Pesah","Yom Kippur","Şabat","Hanuka","Roş Aşana"],c:2},
+  {s:"Yahudilikte oruç tutulan ve \"Kefaret Günü\" olarak bilinen bayram hangisidir?",o:["Pesah","Yom Kippur","Şabat","Roş Aşana","Şavuot"],c:1},
+  {s:"Yahudilikte Hz. İbrahim ile başlayan ve Tanrı'nın İsrailoğulları'nı seçtiğine dair inanç kavramı hangisidir?",o:["Vahiy","Ahit (Seçilmişlik)","Kefaret","Kurban","Talmud"],c:1},
+  {s:"Tanah'ın \"Neviim\" bölümü ne anlama gelir?",o:["Kutsal Yazılar","Peygamberler","Kanun / Tora","Dua Kitabı","Sözlü Yorum"],c:1},
+  {s:"Yahudi dini hukukunda Yahudilerin uyması gereken 613 dini emrin adı nedir?",o:["Talmud","Mitzvot","Tanah","Halacha","Neviim"],c:1},
+  {s:"Pesah (Hamursuz Bayramı) Yahudilikte neyi simgeler?",o:["Hz. Musa'ya Tevrat'ın indirilişini","İsrailoğulları'nın Mısır'dan kurtuluşunu","Hz. İbrahim'in kurban etme eylemini","Yahudi yeni yılının başlangıcını","Hz. Davud'un Krallığını"],c:1},
+  {s:"Hristiyanlığın kutsal kitabı Yeni Ahit kaç İncil'den oluşmaktadır?",o:["Üç","İki","Beş","Dört","Altı"],c:3},
+  {s:"Dört İncil'den hangisi \"Başlangıçta Söz vardı\" diye başlar ve \"sevgi İncili\" olarak bilinir?",o:["Matta","Markos","Luka","Yuhanna","Barnabas"],c:3},
+  {s:"Hristiyanlıktaki Teslis inancına göre aşağıdakilerden hangisi yanlıştır?",o:["Baba, Oğul ve Kutsal Ruh üç ayrı şahsiyettir","Üç şahsiyet birlikte tek Tanrı'yı oluşturur","Hristiyanlık politeist bir dindir","Hz. İsa Tanrı'nın Oğlu olarak kabul edilir","Kutsal Ruh Teslis'in üçüncü şahsiyetidir"],c:2},
+  {s:"Katolik Kilisesi'nin merkezi ve Papa'nın makamı nerededir?",o:["Konstantinopolis","Kudüs","Roma (Vatikan)","Atina","Londra"],c:2},
+  {s:"1517'de Martin Luther öncülüğünde başlayan ve Katolik Kilisesi'nden kopuşla ortaya çıkan Hristiyan mezhebi hangisidir?",o:["Ortodoksluk","Protestanlık","Katoliklik","Anglikanizm","Koptizm"],c:1},
+  {s:"Hristiyanlıkta Hz. İsa'nın dirilişini kutlayan bayram hangisidir?",o:["Noel","Paskalya (Easter)","Epifani","Pentekost","Hanuka"],c:1},
+  {s:"Hristiyanlıkta Hz. İsa'nın doğumunu kutlayan bayram ve tarihi hangisidir?",o:["Paskalya – Nisan ayı","Noel – 25 Aralık","Epifani – 6 Ocak","Pentekost – Mayıs ayı","Noel – 1 Ocak"],c:1},
+  {s:"Hristiyanlıkta suya daldırma veya su dökme yoluyla gerçekleştirilen ve Hristiyanlığa kabul törenini ifade eden sakrament hangisidir?",o:["Efkaristiya","Vaftiz","Konfirmasyon","Günah çıkarma","Hasta yağı"],c:1},
+  {s:"Hristiyanlıkta Efkaristiya (Komünyon) ne anlama gelir?",o:["Günah çıkarma ayini","Hz. İsa'nın Son Akşam Yemeği'ni anma; ekmek-şarap paylaşımı","Vaftiz töreni","Kiliseye kayıt töreni","Hz. İsa'nın doğumunu anma ayini"],c:1},
+  {s:"Ortodoks Kilisesi'nin Ekümenik Patrikhanesi hangi şehirdedir?",o:["Roma","Konstantinopolis (İstanbul / Fener)","Kudüs","Moskova","Atina"],c:1},
+  {s:"Hristiyanlıkta \"ilk günah\" doktrininden kurtuluş için ne gereklidir?",o:["Yalnızca iyi ameller yapmak","Hz. İsa'ya iman ve onun kefaret ölümünü kabul etmek","Tevrat'a uymak","Papaz seçilmek","Talmud'u ezberlemek"],c:1},
+  {s:"Aşağıdakilerden hangisi yalnızca Yahudiliğe özgü bir uygulamadır?",o:["Vaftiz","Şabat (Cumartesi kutsal dinlenme)","Paskalya","Noel","Konfirmasyon"],c:1},
+  {s:"Hristiyanlık ve Yahudiliğin ortak kutsal kitap bölümü hangisidir?",o:["Yeni Ahit","Eski Ahit (Tanah)","Talmud","Dört İncil","Mişna"],c:1},
+  {s:"Protestan din adamlarına verilen unvan aşağıdakilerden hangisidir?",o:["Rahip","Rabbi","Pastor","Papaz","Haham"],c:2},
+  {s:"Hristiyanlıkta günahların bir din adamına itiraf edildiği sakrament hangisidir?",o:["Vaftiz","Evlilik","Günah çıkarma (Tövbe)","Komünyon","Konfirmasyon"],c:2},
+  {s:"Yahudilik ile Hristiyanlığın en temel ayrışma noktası aşağıdakilerden hangisidir?",o:["Tek Tanrı inancı","Hz. İsa'nın Mesih olup olmadığı meselesi","Hz. Musa'nın peygamberliği","Ahiret inancı","Hz. İbrahim'in peygamberliği"],c:1},
+  {s:"Aşağıdakilerden hangisi üç büyük Hristiyan mezhebinden biri değildir?",o:["Katoliklik","Ortodoksluk","Protestanlık","Selefilik","Anglikanizm"],c:3},
+  {s:"Tanah'ın \"Ketuvim\" bölümü ne anlama gelir?",o:["Peygamberler – birinci bölüm","Kutsal Yazılar / Metinler – üçüncü bölüm","Kanun – ikinci bölüm","Dua kitabı – dördüncü bölüm","Talmud – beşinci bölüm"],c:1},
+  {s:"Hristiyanlığa göre Hz. İsa'nın çarmıha gerilmesinin teolojik anlamı nedir?",o:["Hz. İsa'nın siyasi bir suçlu olduğunu gösterir","İnsanlığın günahlarına kefaret ödeyerek kurtuluşu sağlaması","Yahudilerin Roma karşısında galip geldiğini simgeler","Roma İmparatorluğu'nun gücünü gösterir","Hz. İsa'nın Yahudiliği reddettiğini simgeler"],c:1},
+  {s:"Aşağıdaki eşleşmelerden hangisi yanlıştır?",o:["Yom Kippur – Kefaret Günü (Yahudilik)","Noel – Hz. İsa'nın doğumu (Hristiyanlık)","Paskalya – Hz. Musa'nın Mısır'dan çıkışı (Yahudilik)","Pesah – İsrailoğulları'nın Mısır'dan kurtuluşu (Yahudilik)","Şabat – Cuma akşamından Cumartesi'ye uzanan kutsal gün (Yahudilik)"],c:2},
+  {s:"Aşağıdaki kavramlardan hangisi Hristiyanlığa değil Yahudiliğe aittir?",o:["Teslis","Talmud","Vaftiz","Paskalya","Konfirmasyon"],c:1},
+  {s:"Deizm ile Teizm arasındaki temel fark aşağıdakilerden hangisidir?",o:["Deizm Tanrı'yı reddeder; Teizm kabul eder","Deizm vahiy ve mucizeyi reddeder; Teizm vahiy ve mucizeyi kabul eder","Teizm aklı esas alır; Deizm imanı esas alır","İkisi arasında hiçbir fark yoktur","Deizm politeisttir; Teizm monoteisttir"],c:1},
+  {s:"Aşağıdaki yargılardan hangisi hem Yahudilik hem de Hristiyanlık için doğrudur?",o:["Her ikisi de Teslis inancını benimser","Her ikisi de Hz. İsa'yı Mesih olarak kabul eder","Her ikisi de tek Tanrı inancına sahiptir ve Hz. İbrahim'i peygamber kabul eder","Her ikisinin de ibadet yeri kilisedir","Her ikisi de Hz. İsa'yı Tanrı'nın oğlu kabul eder"],c:2}
+];
+
+// Soru 1'in seçeneklerini düzelt (s->o hatası)
+SORULAR[0].o=["Deizm","Ateizm","Teizm","Agnostisizm","Nihilizm"];
+
+const HARFLER=['A','B','C','D','E'];
+let soruIdx=0, dogru=0, yanlis=0;
+
+function renderSoru(){
+  if(soruIdx>=SORULAR.length){bitis();return;}
+  const q=SORULAR[soruIdx];
+  const pct=Math.round((soruIdx/SORULAR.length)*100);
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('progText').textContent='Soru '+(soruIdx+1)+' / '+SORULAR.length;
+  document.getElementById('soruNoBadge').textContent='Soru '+(soruIdx+1)+' / '+SORULAR.length;
+  document.getElementById('soruMetin').textContent=q.s;
+  const liste=document.getElementById('seceneklerListe');
+  liste.innerHTML='';
+  q.o.forEach(function(opt,i){
+    const d=document.createElement('div');
+    d.className='secenek';
+    d.innerHTML='<span class="secenek-harf">'+HARFLER[i]+')</span>'+opt;
+    d.onclick=function(){secCevap(i,q.c);};
+    liste.appendChild(d);
+  });
+  document.getElementById('feedbackDiv').className='feedback';
+  document.getElementById('feedbackDiv').textContent='';
+  document.getElementById('btnSonraki').className='btn-sonraki';
+  document.getElementById('soruKart').classList.remove('cevaplandi');
+  document.getElementById('soruWrap').classList.remove('gizli');
+  document.getElementById('sonucDiv').classList.remove('goster');
+}
+
+function secCevap(idx,dogruIdx){
+  const kart=document.getElementById('soruKart');
+  if(kart.classList.contains('cevaplandi'))return;
+  kart.classList.add('cevaplandi');
+  const secenekler=document.querySelectorAll('#seceneklerListe .secenek');
+  secenekler[dogruIdx].classList.add('sec-dogru');
+  const fb=document.getElementById('feedbackDiv');
+  if(idx===dogruIdx){
+    dogru++;
+    fb.className='feedback dogru-fb';
+    fb.textContent='✓ Doğru! '+HARFLER[dogruIdx]+') şıkkı doğru cevaptır.';
+  } else {
+    yanlis++;
+    secenekler[idx].classList.add('sec-yanlis');
+    fb.className='feedback yanlis-fb';
+    fb.textContent='✗ Yanlış. Doğru cevap: '+HARFLER[dogruIdx]+') '+SORULAR[soruIdx].o[dogruIdx];
+  }
+  const btn=document.getElementById('btnSonraki');
+  if(soruIdx<SORULAR.length-1){
+    btn.textContent='Sonraki Soru ›';
+    btn.className='btn-sonraki goster';
+  } else {
+    btn.textContent='Sonuçları Gör ›';
+    btn.className='btn-sonraki goster';
+  }
+}
+
+function sonrakiSoru(){
+  soruIdx++;
+  renderSoru();
+}
+
+function bitis(){
+  document.getElementById('soruWrap').classList.add('gizli');
+  document.getElementById('progBar').style.width='100%';
+  document.getElementById('progText').textContent='Test tamamlandı!';
+  const puan=dogru*2;
+  document.getElementById('sonucPuan').textContent=puan+' / 100';
+  document.getElementById('sonucD').textContent=dogru;
+  document.getElementById('sonucY').textContent=yanlis;
+  document.getElementById('sonucDiv').classList.add('goster');
+}
+
+function tekrar(){
+  soruIdx=0; dogru=0; yanlis=0;
+  document.getElementById('progBar').style.width='0%';
+  renderSoru();
+}
+</script>
+</body>
+</html>
