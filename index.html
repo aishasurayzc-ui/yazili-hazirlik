@@ -240,60 +240,107 @@ function sekme(n){
 
 // --- TEST VERİSİ ---
 const SORULAR=[
-  {s:"Allah'ın varlığını, birliğini, evrene müdahalesini, vahyi ve mucizeyi kabul eden inanç tutumuna ne denir?",s:["Deizm","Ateizm","Teizm","Agnostisizm","Nihilizm"],c:2},
+  // 1 — Teizm (BUG DÜZELTİLDİ: s→o)
+  {s:"Allah'ın varlığını, birliğini, evrene müdahalesini, vahyi ve mucizeyi kabul eden inanç tutumuna ne denir?",o:["Deizm","Ateizm","Teizm","Agnostisizm","Nihilizm"],c:2},
+  // 2 — Deizm
   {s:"Tanrı'nın varlığını kabul eden, ancak vahyi ve mucizeyi reddederek dini aklın ürünü sayan felsefi tutum hangisidir?",o:["Teizm","Panteizm","Deizm","Nihilizm","Monoteizm"],c:2},
+  // 3 — Agnostisizm
   {s:"Tanrı'nın var olup olmadığının bilinemeyeceğini savunan felsefi tutum hangisidir?",o:["Ateizm","Agnostisizm","Deizm","Politeizm","Monoteizm"],c:1},
+  // 4 — Panteizm
   {s:"Tanrı ile evreni özdeşleştiren, \"Her şey Tanrı'dır\" diyen anlayış hangisidir?",o:["Monoteizm","Teizm","Panteizm","Deizm","Nihilizm"],c:2},
+  // 5 — Fıtrat
   {s:"İslam'a göre insanın doğuştan taşıdığı, onu Allah'a yönelten eğilime ne ad verilir?",o:["Taklit","Fıtrat","Heva","İçtihat","Vicdan"],c:1},
+  // 6 — Ateizm özelliği
   {s:"Aşağıdakilerden hangisi ateizmin temel özelliğidir?",o:["Allah'ın varlığı kesinlikle kabul edilir","Allah'ın varlığı bilinemez","Allah'ın varlığı kesinlikle reddedilir","Allah ile evren özdeştir","Birden fazla tanrıya inanılır"],c:2},
+  // 7 — YENİ: Saatçi Tanrı (Deizm)
+  {s:"Deizm'deki 'Saatçi Tanrı' anlayışına göre aşağıdakilerden hangisi doğrudur?",o:["Tanrı evreni sürekli yönetir ve mucizeler yaratır","Tanrı evreni kurdu; sonra işleyişine bıraktı, müdahale etmez","Tanrı'nın varlığı hiçbir zaman bilinemez","Tanrı evrenin kendisidir, evrenle özdeştir","Tanrı birden fazladır"],c:1},
+  // 8 — Politeizm
   {s:"Birden fazla tanrıya inanılan sistem için kullanılan kavram hangisidir?",o:["Monoteizm","Deizm","Politeizm","Agnostisizm","Teizm"],c:2},
-  {s:"İslam'a göre inançta vahyin rehberliği zorunludur; çünkü:",o:["Akıl tamamen yetersizdir","İnsan aklının sınırlı olduğu kabul edilir","Deist görüş doğrudur","Vahiy aklı tamamen iptal eder","Fıtrat inanmayı engeller"],c:1},
+  // 9 — New Age
   {s:"New Age hareketi hakkında aşağıdakilerden hangisi doğrudur?",o:["Yalnızca İslam'ı esas alır","Kurumsal dinlere sıkı biçimde bağlıdır","Doğu mistisizmi, astroloji gibi unsurları sentezler","Yalnızca Hristiyanlık içi bir reform hareketidir","Yalnızca Budizm'e dayanır"],c:2},
+  // 10 — Siyentoloji
   {s:"Siyentoloji'nin kurucusu kimdir?",o:["Charles Darwin","L. Ron Hubbard","Sigmund Freud","Karl Marx","Friedrich Nietzsche"],c:1},
+  // 11 — En'am 59 sure
   {s:"\"Gaybın anahtarları yalnızca O'nun katındadır; onları O'ndan başkası bilemez.\" ayeti hangi surede yer almaktadır?",o:["Lokman Suresi","Bakara Suresi","En'am Suresi","Yasin Suresi","İhlas Suresi"],c:2},
+  // 12 — En'am 59 mesaj
   {s:"En'am Suresi 59. ayetin temel mesajı aşağıdakilerden hangisidir?",o:["İnsan her şeyi bilebilir","Mutlak bilgi Allah'a aittir; gayb yalnızca O'nun katındadır","Bilim dini açıklar","Melekler her şeyi bilir","İnsan aklı sınırsız kapasitededir"],c:1},
+  // 13 — Lokman 27 sure
   {s:"\"Yeryüzündeki ağaçlar kalem, denizler mürekkep olsa Allah'ın kelimeleri tükenmez.\" ayeti hangi surede geçmektedir?",o:["En'am Suresi","Lokman Suresi","İhlas Suresi","Fatiha Suresi","Nisa Suresi"],c:1},
+  // 14 — Lokman 27 mesaj
   {s:"Lokman Suresi 27. ayet neyi vurgular?",o:["İnsan bilgisinin mükemmelliğini","Allah'ın ilminin sonsuzluğunu ve insan aklının sınırlılığını","Denizlerin kutsallığını","Ağaçların önemini","Kur'an'ın insanlar tarafından yazıldığını"],c:1},
-  {s:"Yeni dinî hareketlerin genel özelliği aşağıdakilerden hangisidir?",o:["Kurumsal geleneksel dinlere sıkıca bağlıdırlar","Bireyin iç dünyasını merkeze alır ve kurumsal dinlerin dışında konumlanır","Yalnızca İslam'a karşıdırlar","Devlet tarafından kurulan yapılardır","Yalnızca bilimsel temelli akımlardır"],c:1},
+  // 15 — YENİ: Hudus Delili
+  {s:"\"Evren sonradan var olmuştur; sonradan var olan her şeyin bir var ediciye ihtiyacı vardır.\" şeklinde özetlenen Allah'ın varlığına akli delil hangisidir?",o:["Fıtrat Delili","İmkan Delili","Nizam Delili","Hudus Delili","Gaye Delili"],c:3},
+  // 16 — Tanah
   {s:"Yahudiliğin kutsal kitabına verilen genel ad nedir?",o:["İncil","Talmud","Tanah","Zebur","Kuran"],c:2},
+  // 17 — Tevrat
   {s:"Hz. Musa'ya vahyedilen ve Tanah'ın temel bölümünü oluşturan kutsal kitap hangisidir?",o:["İncil","Tevrat (Tora)","Talmud","Mişna","Zebur"],c:1},
+  // 18 — Talmud
   {s:"Yahudilikte sözlü yorum geleneğini yazıya geçiren ve Mişna ile Gemara'dan oluşan eser hangisidir?",o:["Tanah","Tora","Talmud","Neviim","Ketuvim"],c:2},
+  // 19 — Sinagog/Rabbi
   {s:"Yahudilikte ibadet yeri ve din adamı çifti hangisidir?",o:["Kilise – Papaz","Sinagog – Rabbi","Cami – İmam","Tapınak – Şaman","Kilise – Pastor"],c:1},
+  // 20 — Mashiach
   {s:"Yahudilikte beklenen kurtarıcı figürün adı nedir?",o:["Mesih (Mashiach)","Musa","İlyas","Davud","Yusuf"],c:0},
+  // 21 — Adonai
   {s:"Yahudilikte Tanrı'nın kutsal dört harfli adı (YHWH) telaffuz edilmek yerine hangi kelimeyle okunur?",o:["Elohim","Adonai","Yehova","Şema","Tora"],c:1},
+  // 22 — Şabat
   {s:"Yahudilikte Cuma akşamından Cumartesi akşamına kadar tutulan kutsal dinlenme gününe ne denir?",o:["Pesah","Yom Kippur","Şabat","Hanuka","Roş Aşana"],c:2},
+  // 23 — Yom Kippur
   {s:"Yahudilikte oruç tutulan ve \"Kefaret Günü\" olarak bilinen bayram hangisidir?",o:["Pesah","Yom Kippur","Şabat","Roş Aşana","Şavuot"],c:1},
+  // 24 — Ahit
   {s:"Yahudilikte Hz. İbrahim ile başlayan ve Tanrı'nın İsrailoğulları'nı seçtiğine dair inanç kavramı hangisidir?",o:["Vahiy","Ahit (Seçilmişlik)","Kefaret","Kurban","Talmud"],c:1},
+  // 25 — Neviim
   {s:"Tanah'ın \"Neviim\" bölümü ne anlama gelir?",o:["Kutsal Yazılar","Peygamberler","Kanun / Tora","Dua Kitabı","Sözlü Yorum"],c:1},
+  // 26 — Mitzvot
   {s:"Yahudi dini hukukunda Yahudilerin uyması gereken 613 dini emrin adı nedir?",o:["Talmud","Mitzvot","Tanah","Halacha","Neviim"],c:1},
+  // 27 — Pesah
   {s:"Pesah (Hamursuz Bayramı) Yahudilikte neyi simgeler?",o:["Hz. Musa'ya Tevrat'ın indirilişini","İsrailoğulları'nın Mısır'dan kurtuluşunu","Hz. İbrahim'in kurban etme eylemini","Yahudi yeni yılının başlangıcını","Hz. Davud'un Krallığını"],c:1},
+  // 28 — İncil sayısı
   {s:"Hristiyanlığın kutsal kitabı Yeni Ahit kaç İncil'den oluşmaktadır?",o:["Üç","İki","Beş","Dört","Altı"],c:3},
+  // 29 — Yuhanna
   {s:"Dört İncil'den hangisi \"Başlangıçta Söz vardı\" diye başlar ve \"sevgi İncili\" olarak bilinir?",o:["Matta","Markos","Luka","Yuhanna","Barnabas"],c:3},
+  // 30 — Teslis yanlış önerme
   {s:"Hristiyanlıktaki Teslis inancına göre aşağıdakilerden hangisi yanlıştır?",o:["Baba, Oğul ve Kutsal Ruh üç ayrı şahsiyettir","Üç şahsiyet birlikte tek Tanrı'yı oluşturur","Hristiyanlık politeist bir dindir","Hz. İsa Tanrı'nın Oğlu olarak kabul edilir","Kutsal Ruh Teslis'in üçüncü şahsiyetidir"],c:2},
+  // 31 — Vatikan
   {s:"Katolik Kilisesi'nin merkezi ve Papa'nın makamı nerededir?",o:["Konstantinopolis","Kudüs","Roma (Vatikan)","Atina","Londra"],c:2},
+  // 32 — Protestanlık
   {s:"1517'de Martin Luther öncülüğünde başlayan ve Katolik Kilisesi'nden kopuşla ortaya çıkan Hristiyan mezhebi hangisidir?",o:["Ortodoksluk","Protestanlık","Katoliklik","Anglikanizm","Koptizm"],c:1},
+  // 33 — Paskalya
   {s:"Hristiyanlıkta Hz. İsa'nın dirilişini kutlayan bayram hangisidir?",o:["Noel","Paskalya (Easter)","Epifani","Pentekost","Hanuka"],c:1},
+  // 34 — Noel
   {s:"Hristiyanlıkta Hz. İsa'nın doğumunu kutlayan bayram ve tarihi hangisidir?",o:["Paskalya – Nisan ayı","Noel – 25 Aralık","Epifani – 6 Ocak","Pentekost – Mayıs ayı","Noel – 1 Ocak"],c:1},
+  // 35 — Vaftiz
   {s:"Hristiyanlıkta suya daldırma veya su dökme yoluyla gerçekleştirilen ve Hristiyanlığa kabul törenini ifade eden sakrament hangisidir?",o:["Efkaristiya","Vaftiz","Konfirmasyon","Günah çıkarma","Hasta yağı"],c:1},
+  // 36 — Efkaristiya
   {s:"Hristiyanlıkta Efkaristiya (Komünyon) ne anlama gelir?",o:["Günah çıkarma ayini","Hz. İsa'nın Son Akşam Yemeği'ni anma; ekmek-şarap paylaşımı","Vaftiz töreni","Kiliseye kayıt töreni","Hz. İsa'nın doğumunu anma ayini"],c:1},
+  // 37 — Ortodoks merkez
   {s:"Ortodoks Kilisesi'nin Ekümenik Patrikhanesi hangi şehirdedir?",o:["Roma","Konstantinopolis (İstanbul / Fener)","Kudüs","Moskova","Atina"],c:1},
+  // 38 — İlk günah
   {s:"Hristiyanlıkta \"ilk günah\" doktrininden kurtuluş için ne gereklidir?",o:["Yalnızca iyi ameller yapmak","Hz. İsa'ya iman ve onun kefaret ölümünü kabul etmek","Tevrat'a uymak","Papaz seçilmek","Talmud'u ezberlemek"],c:1},
-  {s:"Aşağıdakilerden hangisi yalnızca Yahudiliğe özgü bir uygulamadır?",o:["Vaftiz","Şabat (Cumartesi kutsal dinlenme)","Paskalya","Noel","Konfirmasyon"],c:1},
+  // 39 — YENİ: Nizam Delili
+  {s:"\"Evrendeki kusursuz düzen, uyum ve amaçlılık tesadüfle açıklanamaz; bu mükemmel düzeni yaratan bir Yaratıcı olmalıdır.\" görüşü hangi delile aittir?",o:["Hudus Delili","Nizam (Gaye-Düzen) Delili","İmkan Delili","Fıtrat Delili","Tarih Delili"],c:1},
+  // 40 — Ortak kutsal kitap
   {s:"Hristiyanlık ve Yahudiliğin ortak kutsal kitap bölümü hangisidir?",o:["Yeni Ahit","Eski Ahit (Tanah)","Talmud","Dört İncil","Mişna"],c:1},
+  // 41 — Pastor
   {s:"Protestan din adamlarına verilen unvan aşağıdakilerden hangisidir?",o:["Rahip","Rabbi","Pastor","Papaz","Haham"],c:2},
+  // 42 — Günah çıkarma
   {s:"Hristiyanlıkta günahların bir din adamına itiraf edildiği sakrament hangisidir?",o:["Vaftiz","Evlilik","Günah çıkarma (Tövbe)","Komünyon","Konfirmasyon"],c:2},
+  // 43 — Temel ayrışma
   {s:"Yahudilik ile Hristiyanlığın en temel ayrışma noktası aşağıdakilerden hangisidir?",o:["Tek Tanrı inancı","Hz. İsa'nın Mesih olup olmadığı meselesi","Hz. Musa'nın peygamberliği","Ahiret inancı","Hz. İbrahim'in peygamberliği"],c:1},
+  // 44 — Mezhep değil
   {s:"Aşağıdakilerden hangisi üç büyük Hristiyan mezhebinden biri değildir?",o:["Katoliklik","Ortodoksluk","Protestanlık","Selefilik","Anglikanizm"],c:3},
+  // 45 — Ketuvim
   {s:"Tanah'ın \"Ketuvim\" bölümü ne anlama gelir?",o:["Peygamberler – birinci bölüm","Kutsal Yazılar / Metinler – üçüncü bölüm","Kanun – ikinci bölüm","Dua kitabı – dördüncü bölüm","Talmud – beşinci bölüm"],c:1},
+  // 46 — Çarmıh
   {s:"Hristiyanlığa göre Hz. İsa'nın çarmıha gerilmesinin teolojik anlamı nedir?",o:["Hz. İsa'nın siyasi bir suçlu olduğunu gösterir","İnsanlığın günahlarına kefaret ödeyerek kurtuluşu sağlaması","Yahudilerin Roma karşısında galip geldiğini simgeler","Roma İmparatorluğu'nun gücünü gösterir","Hz. İsa'nın Yahudiliği reddettiğini simgeler"],c:1},
+  // 47 — Yanlış eşleşme
   {s:"Aşağıdaki eşleşmelerden hangisi yanlıştır?",o:["Yom Kippur – Kefaret Günü (Yahudilik)","Noel – Hz. İsa'nın doğumu (Hristiyanlık)","Paskalya – Hz. Musa'nın Mısır'dan çıkışı (Yahudilik)","Pesah – İsrailoğulları'nın Mısır'dan kurtuluşu (Yahudilik)","Şabat – Cuma akşamından Cumartesi'ye uzanan kutsal gün (Yahudilik)"],c:2},
-  {s:"Aşağıdaki kavramlardan hangisi Hristiyanlığa değil Yahudiliğe aittir?",o:["Teslis","Talmud","Vaftiz","Paskalya","Konfirmasyon"],c:1},
+  // 48 — YENİ: Karl Marx – Ateizm
+  {s:"\"Din halkın afyonudur\" sözünü söyleyen ve ateizmi savunan düşünür kimdir?",o:["Friedrich Nietzsche","Baruch Spinoza","Thomas Huxley","Karl Marx","Voltaire"],c:3},
+  // 49 — Deizm vs Teizm
   {s:"Deizm ile Teizm arasındaki temel fark aşağıdakilerden hangisidir?",o:["Deizm Tanrı'yı reddeder; Teizm kabul eder","Deizm vahiy ve mucizeyi reddeder; Teizm vahiy ve mucizeyi kabul eder","Teizm aklı esas alır; Deizm imanı esas alır","İkisi arasında hiçbir fark yoktur","Deizm politeisttir; Teizm monoteisttir"],c:1},
+  // 50 — Her iki din ortak
   {s:"Aşağıdaki yargılardan hangisi hem Yahudilik hem de Hristiyanlık için doğrudur?",o:["Her ikisi de Teslis inancını benimser","Her ikisi de Hz. İsa'yı Mesih olarak kabul eder","Her ikisi de tek Tanrı inancına sahiptir ve Hz. İbrahim'i peygamber kabul eder","Her ikisinin de ibadet yeri kilisedir","Her ikisi de Hz. İsa'yı Tanrı'nın oğlu kabul eder"],c:2}
 ];
-
-// Soru 1'in seçeneklerini düzelt (s->o hatası)
-SORULAR[0].o=["Deizm","Ateizm","Teizm","Agnostisizm","Nihilizm"];
 
 const HARFLER=['A','B','C','D','E'];
 let soruIdx=0, dogru=0, yanlis=0;
